@@ -1,0 +1,14 @@
+---
+- name: copy zookeeper
+  unarchive: src=zookeeper-3.4.6.tar.gz dest=/opt
+       
+- name: create link
+  file: src=/opt/zookeeper-3.4.6 dest=/opt/zookeeper state=link owner=lukasz
+
+- name: zookeeper temp
+  file: dest=/app/zookeeper owner=lukasz state=directory
+
+- name: zookeeper conf
+  template: src={{ item }} dest=/opt/zookeeper/conf
+  with_items:
+    - zoo.cfg

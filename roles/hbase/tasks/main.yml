@@ -1,0 +1,16 @@
+---
+- name: copy hbase
+  unarchive: src=hbase-0.98.3-hadoop2-bin.tar.gz dest=/opt
+       
+- name: create link
+  file: src=/opt/hbase-0.98.3-hadoop2 dest=/opt/hbase state=link owner=lukasz
+
+- name: hbase temp
+  file: dest=/app/hbase owner=lukasz state=directory
+
+- name: hbase conf
+  template: src={{ item }} dest=/opt/hbase/conf
+  with_items:
+    - hbase-site.xml
+
+

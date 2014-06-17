@@ -1,0 +1,25 @@
+---
+- name: copy hadoop
+  unarchive: src=hadoop-2.2.0.tar.gz dest=/opt
+       
+- name: create link
+  file: src=/opt/hadoop-2.2.0 dest=/opt/hadoop state=link owner=lukasz
+
+- name: .bashrc
+  copy: src=.bashrc dest=/home/lukasz
+
+- name: mkdir hadoop data
+  file: dest=/app/hadoop/hdfs/namenode state=directory owner=lukasz
+  file: dest=/app/hadoop/hdfs/datanode state=directory owner=lukasz
+
+
+- name: hadoop conf
+  template: src={{ item }} dest=/opt/hadoop/etc/hadoop
+  with_items:
+    - core-site.xml
+    - hdfs-site.xml
+    - mapred-site.xml
+    - yarn-site.xml
+    - hadoop-env.sh
+    - yarn-env.sh
+

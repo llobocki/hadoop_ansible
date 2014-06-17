@@ -1,0 +1,7 @@
+---
+- hosts: hadoop64
+  sudo: yes
+  user: lukasz
+
+  roles:
+    - hbase
